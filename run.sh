@@ -8,6 +8,8 @@ go build -o libtestjna.so --buildmode=c-shared testjna.go
 cd ..
 
 echo 'run tests'
-mvn clean
 export LD_LIBRARY_PATH=/app/libtest
 mvn test
+
+echo 'run benchmarks'
+mvn exec:exec
