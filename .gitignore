@@ -1,3 +1,6 @@
 target
 *.so
+*.dylib
+*.dll
 libtest*.h
+testjni.go

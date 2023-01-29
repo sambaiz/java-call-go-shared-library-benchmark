@@ -1,0 +1,27 @@
+package main
+
+/*
+#cgo CFLAGS: -I<%= ENV['JAVA_HOME'] %>/include/
+#cgo CFLAGS: -I<%= ENV['JAVA_HOME'] %>/include/<%= ENV['GOOS'] %>
+#cgo LDFLAGS: -L${SRCDIR} -lcalljnifunc
+#include "calljnifunc.h"
+#include <stdlib.h>
+*/
+import "C"
+import (
+	"strings"
+	"unsafe"
+)
+
+//export Java_net_sambaiz_TestLibJNI_repeat
+func Java_net_sambaiz_TestLibJNI_repeat(env *C.JNIEnv, clazz C.jclass, jArgStr C.jstring, jArgN C.jint) C.jstring {
+	cArgStr := C.CallJNIGetStringUTFChars(env, jArgStr, (*C.jboolean)(nil))
+	defer C.CallJNIReleaseStringUTFChars(env, jArgStr, cArgStr)
+
+	cRetStr := C.CString(strings.Repeat(C.GoString(cArgStr), int(jArgN)))
+	defer C.free(unsafe.Pointer(cRetStr))
+
+	return C.CallJNINewStringUTF(env, cRetStr)
+}
+
+func main() {}

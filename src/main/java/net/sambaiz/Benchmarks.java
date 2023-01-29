@@ -1,33 +1,42 @@
 package net.sambaiz;
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.CommandLineOptionException;
-import org.openjdk.jmh.runner.options.CommandLineOptions;
+import com.sun.jna.Native;
+import org.openjdk.jmh.annotations.*;
 
+import java.util.concurrent.TimeUnit;
+
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class Benchmarks {
     @State(Scope.Thread)
     public static class Instances {
         public TestLibJNI testLibJNI = new TestLibJNI();
-        public TestLibJNA testLibJNA = TestLibJNA.INSTANCE;
-
+        public TestLibJNAInterfaceMapping testLibJNAInterfaceMapping = TestLibJNAInterfaceMapping.INSTANCE;
+        public TestLibJNADirectMapping testLibJNADirectMapping = new TestLibJNADirectMapping();
     }
 
     @Benchmark
-    public void repeatWithJNI(Instances in) {
-        in.testLibJNI.repeat("abc", 3);
+    public String repeatWithJNI(Instances in) {
+        return in.testLibJNI.repeat("abc", 3);
     }
 
     @Benchmark
-    public void repeatWithJNA(Instances in) {
-        in.testLibJNA.repeat("abc", 3);
+    public String repeatWithJNAInterfaceMapping(Instances in) {
+        byte[] buf = new byte[256];
+        byte[] data = "abc".getBytes();
+        System.arraycopy(data, 0, buf, 0, data.length);
+
+        in.testLibJNAInterfaceMapping.repeat(buf, 3);
+        return Native.toString(buf);
     }
 
-    public static void main(String[] argv) throws CommandLineOptionException, RunnerException {
-        CommandLineOptions cmdOptions = new CommandLineOptions(argv);
-        new Runner(cmdOptions).run();
+    @Benchmark
+    public String repeatWithJNADirectMapping(Instances in) {
+        byte[] buf = new byte[256];
+        byte[] data = "abc".getBytes();
+        System.arraycopy(data, 0, buf, 0, data.length);
+
+        in.testLibJNADirectMapping.repeat(buf, 3);
+        return Native.toString(buf);
     }
 }

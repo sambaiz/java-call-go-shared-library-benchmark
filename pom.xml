@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.sambaiz</groupId>
-    <artifactId>call-go-func-from-java</artifactId>
+    <artifactId>java-call-go-shared-library-benchmark</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -50,6 +50,9 @@
                         <version>5.9.2</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <argLine>-Djava.library.path=./libtest -Djna.library.path=./libtest</argLine>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -60,7 +63,9 @@
                     <arguments>
                         <argument>-classpath</argument>
                         <classpath />
-                        <argument>net.sambaiz.Benchmarks</argument>
+                        <argument>-Djava.library.path=./libtest</argument>
+                        <argument>-Djna.library.path=./libtest</argument>
+                        <argument>org.openjdk.jmh.Main</argument>
                     </arguments>
                 </configuration>
             </plugin>
