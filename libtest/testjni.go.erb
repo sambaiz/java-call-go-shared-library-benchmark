@@ -2,7 +2,7 @@ package main
 
 /*
 #cgo CFLAGS: -I<%= ENV['JAVA_HOME'] %>/include/
-#cgo CFLAGS: -I<%= ENV['JAVA_HOME'] %>/include/<%= ENV['GOOS'] %>
+#cgo CFLAGS: -I<%= ENV['JAVA_HOME'] %>/include/<%= ENV['OS_NAME'] %>
 #cgo LDFLAGS: -L${SRCDIR} -lcalljnifunc
 #include "calljnifunc.h"
 #include <stdlib.h>
