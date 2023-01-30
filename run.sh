@@ -1,7 +1,7 @@
 #!/bin/bash -eu
 
 # Settings for macOS
-export OS_NAME=darwin DYLIB_EXTENSION=dylibav
+export OS_NAME=darwin DYLIB_EXTENSION=dylib
 
 cd libtest
 gcc -shared -fPIC -I${JAVA_HOME}/include -I${JAVA_HOME}/include/${OS_NAME} calljnifunc.c -o libcalljnifunc.so
