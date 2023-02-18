@@ -21,4 +21,4 @@ Benchmarks.repeatWithJNI                  avgt   25  1718.787 ±  9.206  ns/op
 ### Article
 
 - ja: [Java から Go でビルドした shared library を JNI と JNA で呼び出した際の速度を比較する - sambaiz-net](https://www.sambaiz.net/article/437/)
-- en: [Benchmark calling a shared library built in Go from Java with JNI and JNA - sambaiz-net](https://www.sambaiz.net/en/article/437/) 
+- en: [Compare the speed of calling a shared library built in Go from Java with JNI and JNA - sambaiz-net](https://www.sambaiz.net/en/article/437/) 
